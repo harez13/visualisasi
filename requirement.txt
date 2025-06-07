@@ -1,0 +1,8 @@
+streamlit
+pandas
+altair
+plotly
+seaborn     
+bokeh
+plotly
+kaleido
