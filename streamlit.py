@@ -74,3 +74,43 @@ plt.ylabel('Stasiun')
 plt.xticks(rotation=45)
 plt.tight_layout()
 st.pyplot(het)
+
+import streamlit as st
+import pandas as pd
+import matplotlib.pyplot as plt
+
+# Load data
+df = pd.read_csv("clean_data.csv")
+
+# Pastikan kolom tanggal dalam format datetime
+df['tanggal'] = pd.to_datetime(df['tanggal'], dayfirst=True, errors='coerce')
+
+# Tambahkan kolom tahun jika belum ada
+df['tahun'] = df['tanggal'].dt.year
+
+st.title("Tren Kategori Kualitas Udara per Stasiun")
+st.subheader("Berdasarkan Parameter Pencemar Kritis")
+
+# Pilihan parameter pencemar kritis
+parameter_list = sorted(df['parameter_pencemar_kritis'].dropna().unique())
+selected_param = st.selectbox("Pilih Parameter Pencemar Kritis:", parameter_list)
+
+# Filter berdasarkan parameter
+filtered_df = df[df['parameter_pencemar_kritis'] == selected_param]
+
+# Hitung jumlah kategori per stasiun
+kategori_tren_stasiun = filtered_df.groupby(['stasiun', 'kategori']).size().unstack(fill_value=0)
+
+# Visualisasi
+st.write(f"Jumlah Hari per Kategori Kualitas Udara untuk **{selected_param}** di Tiap Stasiun:")
+
+fig, ax = plt.subplots(figsize=(12, 6))
+kategori_tren_stasiun.plot(kind="bar", stacked=True, ax=ax)
+plt.title(f"Tren Kategori Kualitas Udara per Stasiun - Parameter: {selected_param}")
+plt.xlabel("Stasiun")
+plt.ylabel("Jumlah Hari")
+plt.xticks(rotation=45, ha='right')
+plt.grid(True, linestyle='--', alpha=0.6)
+plt.legend(title="Kategori", bbox_to_anchor=(1.05, 1), loc="upper left")
+st.pyplot(fig)
+
