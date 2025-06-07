@@ -66,11 +66,11 @@ ordered_months = list(calendar.month_name)[1:]  # ['January', ..., 'December']
 pivot_kategori = pivot_kategori[ordered_months]
 
 # Plot heatmap
-plt.figure(figsize=(14, 6))
+het, ax = plt.figure(figsize=(14, 6))
 sns.heatmap(pivot_kategori, annot=True, fmt='d', cmap='Reds', linewidths=0.5)
 plt.title('Jumlah Hari dengan Kategori "TIDAK SEHAT" per Stasiun per Bulan (2024)', fontsize=14)
 plt.xlabel('Bulan')
 plt.ylabel('Stasiun')
 plt.xticks(rotation=45)
 plt.tight_layout()
-st.pyplot(pt)
+st.pyplot(het)
