@@ -46,3 +46,6 @@ plt.grid(True, linestyle='--', alpha=0.7)
 plt.legend(title="Kategori")
 st.pyplot(fig)
 
+
+st.title("Tren Kategori Kualitas Udara per Bulan")
+st.subheader("Parameter Pencemar Kritis: PM2.5")
