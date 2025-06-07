@@ -10,6 +10,7 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 import calendar
 
+st.sidebar.success('Select page above')
 # Load data
 df = pd.read_csv("clean_data.csv")
 
