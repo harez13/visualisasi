@@ -12,35 +12,37 @@ import seaborn as sns
 # Load data
 df = pd.read_csv("clean_data.csv")
 
-# Konversi tanggal jika diperlukan
-if 'tanggal' in df.columns:
-    df['tanggal'] = pd.to_datetime(df['tanggal'], dayfirst=True, errors='coerce')
+# Pastikan tanggal dalam format datetime
+df['tanggal'] = pd.to_datetime(df['tanggal'], dayfirst=True, errors='coerce')
 
-# Tambahkan kolom tahun jika belum ada
-if 'bulan' not in df.columns:
-    df['bulan'] = pd.DatetimeIndex(df['tanggal']).month
+# Tambahkan kolom tahun & bulan jika belum ada
+df['bulan'] = df['tanggal'].dt.month
+df['tahun'] = df['tanggal'].dt.year
 
-st.title("Tren Kategori Kualitas Udara per Tahun")
-st.subheader("Berdasarkan Parameter Pencemar Kritis = PM2.5")
+st.title("Tren Kategori Kualitas Udara per Bulan")
+st.subheader("Parameter Pencemar Kritis: PM2.5")
 
 # Pilihan stasiun
 stasiun_list = sorted(df['stasiun'].dropna().unique())
 selected_stasiun = st.selectbox("Pilih Stasiun Pemantauan:", stasiun_list)
 
-# Filter data berdasarkan pilihan
+# Filter data berdasarkan stasiun dan parameter PM2.5
 filtered_df = df[(df['stasiun'] == selected_stasiun) & (df['parameter_pencemar_kritis'] == "PM25")]
 
-# Hitung jumlah kategori per tahun
-kategori_tren_tahunan = filtered_df.groupby(['tahun', 'kategori']).size().unstack(fill_value=0)
+# Hitung jumlah kategori per bulan
+kategori_tren_bulanan = filtered_df.groupby(['bulan', 'kategori']).size().unstack(fill_value=0)
 
-# Visualisasi
-st.write(f"Tren Kategori Kualitas Udara di **{selected_stasiun}** berdasarkan data tahunan:")
+# Plot
+st.write(f"Tren kategori kualitas udara bulanan di **{selected_stasiun}**:")
 
-fig, ax = plt.subplots(figsize=(10, 6))
-kategori_tren_tahunan.plot(ax=ax, marker='o')
-plt.title(f"Tren Kategori Kualitas Udara per Tahun - {selected_stasiun}")
-plt.xlabel("Tahun")
+fig, ax = plt.subplots(figsize=(12, 6))
+kategori_tren_bulanan.plot(ax=ax, marker='o')
+plt.title(f"Tren Kategori Kualitas Udara per Bulan - {selected_stasiun}")
+plt.xlabel("Bulan")
 plt.ylabel("Jumlah Hari")
+plt.xticks(ticks=range(1, 13), labels=["Jan", "Feb", "Mar", "Apr", "Mei", "Jun", 
+                                       "Jul", "Agu", "Sep", "Okt", "Nov", "Des"])
 plt.grid(True, linestyle='--', alpha=0.7)
 plt.legend(title="Kategori")
 st.pyplot(fig)
+
