@@ -6,3 +6,8 @@ seaborn
 bokeh
 plotly
 kaleido
+ipykernel
+matplotlib
+matplotlib-inline
+numpy
+psutil
