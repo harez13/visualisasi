@@ -66,7 +66,7 @@ elif option == "4. Frekuensi Parameter Pencemar Kritis per Stasiun":
 elif option == "5. Tren Harian PM2.5 per Stasiun":
     st.subheader("📈 Tren Harian PM2.5 per Stasiun")
     pm25 = df[df["parameter_pencemar_kritis"] == "PM25"]
-    pivot_pm25 = pm25.pivot_table(index="tanggal", columns="stasiun", values="pm_duakomalima")
+    pivot_pm25 = pm25.pivot_table(index="bulan", columns="stasiun", values="pm_duakomalima")
     fig, ax = plt.subplots(figsize=(12, 6))
     sns.heatmap(pivot_pm25.T, cmap="Reds", cbar_kws={'label': 'PM2.5 (µg/m³)'}, ax=ax)
     st.pyplot(fig)
