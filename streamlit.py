@@ -17,8 +17,8 @@ if 'tanggal' in df.columns:
     df['tanggal'] = pd.to_datetime(df['tanggal'], dayfirst=True, errors='coerce')
 
 # Tambahkan kolom tahun jika belum ada
-if 'tahun' not in df.columns:
-    df['tahun'] = pd.DatetimeIndex(df['tanggal']).year
+if 'bulan' not in df.columns:
+    df['bulan'] = pd.DatetimeIndex(df['tanggal']).month
 
 st.title("Tren Kategori Kualitas Udara per Tahun")
 st.subheader("Berdasarkan Parameter Pencemar Kritis = PM2.5")
