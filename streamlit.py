@@ -8,6 +8,7 @@ import streamlit as st
 import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
+import calendar
 
 # Load data
 df = pd.read_csv("clean_data.csv")
@@ -49,3 +50,27 @@ st.pyplot(fig)
 
 st.title("Tren Kategori Kualitas Udara per Bulan")
 st.subheader("Parameter Pencemar Kritis: PM2.5")
+df['nama_bulan'] = df['bulan'].apply(lambda x: calendar.month_name[x])
+
+# Buat pivot table: jumlah kategori per stasiun per bulan
+pivot_kategori = df.pivot_table(
+    index='stasiun',
+    columns='nama_bulan',
+    values='kategori',
+    aggfunc=lambda x: (x == 'TIDAK SEHAT').sum(),  # contoh: hanya hitung 'TIDAK SEHAT'
+    fill_value=0
+)
+
+# Urutkan bulan agar kronologis
+ordered_months = list(calendar.month_name)[1:]  # ['January', ..., 'December']
+pivot_kategori = pivot_kategori[ordered_months]
+
+# Plot heatmap
+plt.figure(figsize=(14, 6))
+sns.heatmap(pivot_kategori, annot=True, fmt='d', cmap='Reds', linewidths=0.5)
+plt.title('Jumlah Hari dengan Kategori "TIDAK SEHAT" per Stasiun per Bulan (2024)', fontsize=14)
+plt.xlabel('Bulan')
+plt.ylabel('Stasiun')
+plt.xticks(rotation=45)
+plt.tight_layout()
+st.pyplot(pt)
