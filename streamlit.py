@@ -51,7 +51,6 @@ if not valid_dates.empty:
 else:
     st.error("Data tanggal tidak tersedia atau semua baris tanggal invalid.")
 
-date_filtered = df[(df['tanggal'] >= date_range[0]) & (df['tanggal'] <= date_range[1])]
 avg_by_station = date_filtered.groupby('stasiun')['pm_duakomalima'].mean().sort_values()
 
 fig2, ax2 = plt.subplots()
