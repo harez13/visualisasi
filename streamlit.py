@@ -5,7 +5,12 @@ import matplotlib.pyplot as plt
 
 # Load dan persiapkan data
 df = pd.read_csv("clean_data.csv")
-df['tanggal'] = pd.to_datetime(df['tanggal'], format='%d/%m/%Y')
+try:
+    df['tanggal'] = pd.to_datetime(df['tanggal'], errors='coerce')
+    st.success("Tanggal berhasil diparse secara otomatis.")
+except Exception as e:
+    st.error(f"Gagal mengubah kolom tanggal: {e}")
+    st.stop()
 
 # Dropdown stasiun
 st.subheader("1️⃣ Tren Harian PM2.5 per Stasiun")
