@@ -32,8 +32,8 @@ mask = (df['tanggal'].dt.date >= start_date) & (df['tanggal'].dt.date <= end_dat
 filtered_df = df[mask]
 
 # Tampilkan line chart jika data tersedia
-if 'pm2_5' in filtered_df.columns and not filtered_df.empty:
-    st.line_chart(filtered_df.set_index('tanggal')['pm2_5'])
+if 'pm_duakomalima' in filtered_df.columns and not filtered_df.empty:
+    st.line_chart(filtered_df.set_index('tanggal')['pm_duakomalima'])
     st.caption("Grafik menunjukkan tren kadar PM2.5 dalam rentang waktu yang dipilih. PM2.5 adalah partikel udara halus yang berbahaya jika terhirup dalam jangka panjang.")
 else:
     st.warning("Tidak ada data yang tersedia dalam rentang tanggal ini atau kolom 'pm2_5' tidak ditemukan.")
