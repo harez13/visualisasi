@@ -58,7 +58,7 @@ st.subheader("3️⃣ Korelasi Antar Polutan")
 df.columns = df.columns.str.strip().str.lower()  # membersihkan nama kolom
 
 # Daftar kolom polutan berdasarkan isi dataset
-pollutants = ['pm2_5', 'pm10', 'so2', 'co', 'o3', 'no2']
+pollutants = ['pm_duakomalima', 'pm_sepuluh', 'sulfur_dioksida', 'karbon_monoksida', 'ozon', 'nitrogen_dioksida']
 st.write("Kolom tersedia:", df.columns.tolist())
 
 
