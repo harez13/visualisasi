@@ -26,7 +26,29 @@ st.pyplot(fig)
 st.caption("📌 Lihat apakah kualitas udara memburuk/meningkat di stasiun yang dipilih.")
 
 st.subheader("2️⃣ Rata-rata PM2.5 Berdasarkan Rentang Waktu")
-min_date, max_date = df['tanggal'].min(), df['tanggal'].max()
+# Pastikan konversi tanggal aman
+df['tanggal'] = pd.to_datetime(df['tanggal'], errors='coerce')
+valid_dates = df['tanggal'].dropna()
+
+if not valid_dates.empty:
+    min_date = valid_dates.min().date()
+    max_date = valid_dates.max().date()
+
+    date_range = st.slider(
+        "Pilih rentang tanggal:",
+        min_value=min_date,
+        max_value=max_date,
+        value=(min_date, max_date)
+    )
+
+    start_date, end_date = date_range
+    mask = (df['tanggal'].dt.date >= start_date) & (df['tanggal'].dt.date <= end_date)
+    filtered_df = df[mask]
+
+    st.write("Jumlah data pada rentang:", len(filtered_df))
+    st.line_chart(filtered_df.set_index('tanggal')['pm2_5'])
+else:
+    st.error("Data tanggal tidak tersedia atau semua baris tanggal invalid.")
 date_range = st.slider("Pilih rentang tanggal:", min_value=min_date, max_value=max_date, value=(min_date, max_date))
 
 date_filtered = df[(df['tanggal'] >= date_range[0]) & (df['tanggal'] <= date_range[1])]
