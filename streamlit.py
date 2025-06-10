@@ -77,7 +77,15 @@ if len(pollutants) >= 2:
     sns.heatmap(corr, annot=True, cmap="coolwarm", fmt=".2f", ax=ax)
     st.pyplot(fig)
 
-    st.caption("Contoh: Jika PM2.5 dan PM10 memiliki korelasi 0.9, berarti saat PM2.5 tinggi, PM10 juga biasanya tinggi.")
+    st.caption("Sumbu X dan Y menunjukkan nama polutan (contoh: PM2.5, CO, SO2).
+
+Warna menunjukkan hubungan (korelasi):
+
+🔴 1.0 → hubungan sangat kuat (positif)
+
+🔵 -1.0 → hubungan sangat kuat (negatif)
+
+⚪ 0 → tidak ada hubungan")
 else:
     st.warning("Tidak cukup data polutan untuk membuat heatmap korelasi.")
 
