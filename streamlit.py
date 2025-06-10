@@ -59,6 +59,8 @@ df.columns = df.columns.str.strip().str.lower()  # membersihkan nama kolom
 
 # Daftar kolom polutan berdasarkan isi dataset
 pollutants = ['pm2_5', 'pm10', 'so2', 'co', 'o3', 'no2']
+st.write("Kolom tersedia:", df.columns.tolist())
+
 
 # Validasi: pastikan kolom ini ada dalam dataframe
 pollutants = [col for col in pollutants if col in df.columns]
