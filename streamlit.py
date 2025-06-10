@@ -87,6 +87,7 @@ fig4, ax4 = plt.subplots()
 sns.histplot(df['pm_duakomalima'], bins=bins, kde=True, color='salmon', ax=ax4)
 ax4.set_title("Sebaran PM2.5 di Jakarta")
 ax4.set_xlabel("PM2.5")
+ax4.set_ylabel("Jumlah Hari")
 st.pyplot(fig4)
 st.caption("📌 Gunakan histogram untuk memahami seberapa sering udara termasuk tidak sehat.")
 
