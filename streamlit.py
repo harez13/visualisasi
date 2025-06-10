@@ -1,5 +1,7 @@
 import streamlit as st
 import pandas as pd
+import seaborn as sns
+import matplotlib.pyplot as plt
 
 # Baca dan bersihkan data
 df = pd.read_csv("clean_data.csv")
