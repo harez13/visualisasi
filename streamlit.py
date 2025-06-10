@@ -37,3 +37,17 @@ if 'pm_duakomalima' in filtered_df.columns and not filtered_df.empty:
     st.caption("Grafik menunjukkan tren kadar PM2.5 dalam rentang waktu yang dipilih. PM2.5 adalah partikel udara halus yang berbahaya jika terhirup dalam jangka panjang.")
 else:
     st.warning("Tidak ada data yang tersedia dalam rentang tanggal ini atau kolom 'pm2_5' tidak ditemukan.")
+
+
+# Dropdown stasiun
+st.subheader("1️⃣ Tren Harian PM2.5 per Stasiun")
+selected_station = st.selectbox("Pilih Stasiun:", df['stasiun'].unique())
+
+filtered = df[df['stasiun'] == selected_station]
+fig, ax = plt.subplots()
+sns.lineplot(data=filtered, x='tanggal', y='pm_duakomalima', ax=ax, color='teal')
+ax.set_title(f'Tren Harian PM2.5 - {selected_station}')
+ax.set_ylabel('PM2.5')
+ax.set_xlabel('Tanggal')
+st.pyplot(fig)
+st.caption("📌 Lihat apakah kualitas udara memburuk/meningkat di stasiun yang dipilih.")
