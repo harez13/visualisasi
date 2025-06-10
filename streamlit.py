@@ -53,3 +53,14 @@ ax.set_ylabel('PM2.5')
 ax.set_xlabel('Tanggal')
 st.pyplot(fig)
 st.caption("📌 Lihat apakah kualitas udara memburuk/meningkat di stasiun yang dipilih.")
+
+st.subheader("3️⃣ Korelasi Antar Polutan")
+pollutants = ['pm_sepuluh', 'pm_duakomalima', 'so2', 'co', 'o3', 'no2']
+corr = df[pollutants].corr()
+
+fig3, ax3 = plt.subplots()
+sns.heatmap(corr, annot=True, cmap="coolwarm", vmin=-1, vmax=1, ax=ax3)
+ax3.set_title("Matriks Korelasi Antar Polutan")
+st.pyplot(fig3)
+st.caption("📌 Hubungan erat antar polutan dapat menunjukkan sumber yang sama (misal: kendaraan).")
+
