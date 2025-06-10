@@ -29,9 +29,9 @@ if not valid_dates.empty:
     filtered_df = df[mask]
 
     # Pastikan kolom pm2_5 tersedia
-    if 'pm2_5' in filtered_df.columns:
-        st.line_chart(filtered_df.set_index('tanggal')['pm2_5'])
+    if 'pm_duakomalima' in filtered_df.columns:
+        st.line_chart(filtered_df.set_index('tanggal')['pm_duakomalima'])
     else:
-        st.error("Kolom 'pm2_5' tidak ditemukan setelah pembersihan.")
+        st.error("Kolom 'pm_duakomalima' tidak ditemukan setelah pembersihan.")
 else:
     st.error("Data tanggal tidak valid atau kosong.")
