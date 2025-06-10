@@ -91,4 +91,15 @@ ax4.set_ylabel("Jumlah Hari")
 st.pyplot(fig4)
 st.caption("📌 Gunakan histogram untuk memahami seberapa sering udara termasuk tidak sehat.")
 
+st.subheader("5️⃣ Distribusi PM2.5 per Bulan")
+df['bulan'] = df['tanggal'].dt.month_name()
+fig5, ax5 = plt.subplots(figsize=(10, 5))
+sns.boxplot(x='bulan', y='pm_duakomalima', data=df, palette="crest", ax=ax5)
+ax5.set_title("Distribusi PM2.5 Berdasarkan Bulan")
+ax5.set_xlabel("Bulan")
+ax5.set_ylabel("PM2.5")
+plt.xticks(rotation=45)
+st.pyplot(fig5)
+st.caption("📌 Bandingkan kualitas udara antar bulan. Bulan dengan nilai tinggi → potensi bahaya lebih besar.")
+
 
