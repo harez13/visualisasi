@@ -55,12 +55,27 @@ st.pyplot(fig)
 st.caption("📌 Lihat apakah kualitas udara memburuk/meningkat di stasiun yang dipilih.")
 
 st.subheader("3️⃣ Korelasi Antar Polutan")
-pollutants = ['pm_sepuluh', 'pm_duakomalima', 'so2', 'co', 'o3', 'no2']
-corr = df[pollutants].corr()
+df.columns = df.columns.str.strip().str.lower()  # membersihkan nama kolom
 
-fig3, ax3 = plt.subplots()
-sns.heatmap(corr, annot=True, cmap="coolwarm", vmin=-1, vmax=1, ax=ax3)
-ax3.set_title("Matriks Korelasi Antar Polutan")
-st.pyplot(fig3)
-st.caption("📌 Hubungan erat antar polutan dapat menunjukkan sumber yang sama (misal: kendaraan).")
+# Daftar kolom polutan berdasarkan isi dataset
+pollutants = ['pm2_5', 'pm10', 'so2', 'co', 'o3', 'no2']
+
+# Validasi: pastikan kolom ini ada dalam dataframe
+pollutants = [col for col in pollutants if col in df.columns]
+
+# Pastikan cukup data untuk visualisasi
+if len(pollutants) >= 2:
+    corr = df[pollutants].corr()
+
+    # Plot heatmap
+    st.title("Korelasi Antar Polutan")
+    st.markdown("Matriks berikut menunjukkan hubungan antar polutan. Korelasi tinggi (mendekati 1 atau -1) artinya dua polutan sering naik-turun bersama.")
+
+    fig, ax = plt.subplots(figsize=(8, 6))
+    sns.heatmap(corr, annot=True, cmap="coolwarm", fmt=".2f", ax=ax)
+    st.pyplot(fig)
+
+    st.caption("Contoh: Jika PM2.5 dan PM10 memiliki korelasi 0.9, berarti saat PM2.5 tinggi, PM10 juga biasanya tinggi.")
+else:
+    st.warning("Tidak cukup data polutan untuk membuat heatmap korelasi.")
 
