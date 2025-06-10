@@ -77,15 +77,17 @@ if len(pollutants) >= 2:
     sns.heatmap(corr, annot=True, cmap="coolwarm", fmt=".2f", ax=ax)
     st.pyplot(fig)
 
-    st.caption("Sumbu X dan Y menunjukkan nama polutan (contoh: PM2.5, CO, SO2).
-
-Warna menunjukkan hubungan (korelasi):
-
-🔴 1.0 → hubungan sangat kuat (positif)
-
-🔵 -1.0 → hubungan sangat kuat (negatif)
-
-⚪ 0 → tidak ada hubungan")
+    st.caption("Contoh: Jika PM2.5 dan PM10 memiliki korelasi 0.9, berarti saat PM2.5 tinggi, PM10 juga biasanya tinggi.")
 else:
     st.warning("Tidak cukup data polutan untuk membuat heatmap korelasi.")
+
+st.subheader("4️⃣ Sebaran PM2.5")
+bins = st.slider("Jumlah kelompok (bin) histogram:", 5, 50, 15)
+fig4, ax4 = plt.subplots()
+sns.histplot(df['pm_duakomalima'], bins=bins, kde=True, color='salmon', ax=ax4)
+ax4.set_title("Sebaran PM2.5 di Jakarta")
+ax4.set_xlabel("PM2.5")
+st.pyplot(fig4)
+st.caption("📌 Gunakan histogram untuk memahami seberapa sering udara termasuk tidak sehat.")
+
 
